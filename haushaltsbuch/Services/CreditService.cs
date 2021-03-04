@@ -11,12 +11,12 @@ namespace haushaltsbuch.Services
     {
         private readonly IMongoCollection<Credit> _credits;
 
-        public CreditService(IHaushalstBuchDatabaseSettings settings)
+        public CreditService(IBudgetbookDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            _credits = database.GetCollection<Credit>(settings.BudgetbookCollectionName);
+            _credits = database.GetCollection<Credit>(settings.CreditCollectionName);
         }
         // Get list of all documents in Credit collection.
         public List<Credit> Get() =>

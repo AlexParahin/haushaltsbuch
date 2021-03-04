@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
@@ -29,12 +30,15 @@ namespace haushaltsbuch
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<BudgetbookDatabaseSettings>(Configuration.GetSection(nameof(BudgetbookDatabaseSettings)));
+             services.Configure<BudgetbookDatabaseSettings>(Configuration.GetSection(nameof(BudgetbookDatabaseSettings)));
+
+            services.AddSingleton<IBudgetbookDatabaseSettings>(sp =>
+                    sp.GetRequiredService<IOptions<BudgetbookDatabaseSettings>>().Value);
 
             services.AddSingleton<CreditService>();
+             services.AddSingleton<DebitService>();
 
-            //services.AddSingleton<IBudgetbookDatabaseSettings>(sp => sp.GetRequiredService<IOptions<BudgetbookDatabaseSettings>>().Value);
-            
+        
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

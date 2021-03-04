@@ -5,15 +5,17 @@ using System.Threading.Tasks;
 
 namespace haushaltsbuch.Models
 {
-    public class BudgetbookDatabaseSettings
+    public class BudgetbookDatabaseSettings : IBudgetbookDatabaseSettings
     {
-        public string BudgetbookCollectionName { get; set; }
+        public string CreditCollectionName { get; set; }
+        public string DebitCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }
-    public interface IHaushalstBuchDatabaseSettings
+    public interface IBudgetbookDatabaseSettings
     {
-        string BudgetbookCollectionName { get; set; }
+        string CreditCollectionName { get; set; }
+        string DebitCollectionName { get; set; }
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
     }
